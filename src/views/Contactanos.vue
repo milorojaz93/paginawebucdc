@@ -69,7 +69,7 @@
           <formulario
             id="container-formulario"
             :campos="campos"
-            accion=""
+            accion="https://urbancitydancecompany.com/api/public/contacto"
           />
         </b-col>
       </b-row>
@@ -77,9 +77,13 @@
   </div>
 </template>
 <script>
-import IrArriba from 'vue-backtotop';
+const IrArriba = () => import('vue-backtotop')
+const EncabezadoTitulo = () => import('../components/EncabezadoTitulo.vue')
+const Formulario = () => import('../components/Formulario.vue')
+
+/*import IrArriba from 'vue-backtotop';
 import EncabezadoTitulo from '../components/EncabezadoTitulo.vue';
-import Formulario from '../components/Formulario.vue';
+import Formulario from '../components/Formulario.vue';*/
 
 export default {
   name: 'Contactanos',
@@ -95,6 +99,11 @@ export default {
           id: 1,
           label: 'Nombres',
           obligatorio: true,
+          validation: 'required|min:15',
+          mensajes: {
+            required: 'Los nombres son obligatorios diligenciarlos.',
+            min:  'Los nombres deben tener minimo 15 caracteres'
+          },
           descripcion: 'Escríbenos tus nombres completos',
           campo_vmodel: 'nombre', // indica el campo para al v-model
           type: 'text',
@@ -103,6 +112,11 @@ export default {
           id: 2,
           label: 'Correo Electrónico',
           obligatorio: true,
+          validation: 'required|min:15',
+          mensajes: {
+            required: 'El correo electrónico es obligatorio diligenciarlo.',
+            min:  'El correo debe tener minimo 15 caracteres'
+          },
           descripcion: 'Escríbenos tu correo electrónico para poderte contactar',
           campo_vmodel: 'correo', // indica el campo para al v-model
           type: 'email',
@@ -111,6 +125,12 @@ export default {
           id: 3,
           label: 'Teléfono',
           obligatorio: true,
+          validation: 'required|min:7|number',
+          mensajes: {
+            required: 'El telefono es obligatorio diligenciarlo.',
+            min:  'El telefono debe tener minimo 7 caracteres',
+            number: 'El telefono solo debe tener números'
+          },
           descripcion:
             'Escríbenos tu número de teléfono para poderte contactar y responder tu solicitud',
           campo_vmodel: 'telefono', // indica el campo para al v-model
@@ -121,6 +141,11 @@ export default {
           label: 'Mensaje',
           obligatorio: true,
           descripcion: '',
+          validation: 'required|min:20',
+          mensajes: {
+            required: 'El mensaje es obligatorio diligenciarlo.',
+            min:  'El mensaje debe tener minimo 20 caracteres'
+          },
           campo_vmodel: 'mensaje', // indica el campo para al v-model
           type: 'textarea',
         },

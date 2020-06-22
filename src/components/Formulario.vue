@@ -1,127 +1,119 @@
 <template>
   <div>
-    <small> Campos marcados con <b style="color:red">* </b> son obligatorios</small>
-    <!--  <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <div v-for="item in campos" :key="item.id">
-        <div v-if="item.obligatorio">
-          <b-form-group
-            id="input-group"
+    <loader-u-c-d-c :mostrar="loader"></loader-u-c-d-c>
+    <div v-if="show">
+      <small>
+        Campos marcados con
+        <b style="color:red">*</b> son obligatorios
+      </small>
+      <FormulateForm v-model="form" @submit="onSubmit">
+        <div v-for="item in campos" :key="item.id">
+          <FormulateInput
+            v-if="item.obligatorio"
+            :validation="item.validation"
+            :help="item.descripcion"
+            :type="item.type"
+            :name="item.campo_vmodel"
             :label="item.label + ':*'"
-            :label-for="'input-' + item.id"
-            :description="item.descripcion"
-          >
-            <b-form-textarea
-              v-if="item.type == 'textarea'"
-              :id="'textarea-' + item.id"
-              v-model="form[item.campo_vmodel]"
-              placeholder=""
-              required
-              rows="3"
-              max-rows="6"
-            ></b-form-textarea>
-
-            <b-form-input
-              v-else
-              :id="'input-' + item.id"
-              v-model="form[item.campo_vmodel]"
-              :type="item.type"
-              required
-              :placeholder="item.label"
-            ></b-form-input>
-          </b-form-group>
+            :placeholder="item.label"
+            :validation-messages="item.mensajes"
+          />
+          <FormulateInput
+            v-else
+            :help="item.descripcion"
+            :type="item.type"
+            :name="item.campo_vmodel"
+            :label="item.label + ':*'"
+            :placeholder="item.label"
+            :validation="item.validation"
+            :validation-messages="item.mensajes"
+          />
         </div>
-        <div v-else>
-          <b-form-group
-            id="input-group"
-            :label="item.label + ':'"
-            :label-for="'input-' + item.id"
-            :description="item.descripcion"
-          >
-            <b-form-textarea
-              v-if="item.type == 'textarea'"
-              :id="'textarea-' + item.id"
-              v-model="form[item.campo_vmodel]"
-              placeholder=""
-              rows="3"
-              max-rows="6"
-            ></b-form-textarea>
+        <FormulateErrors />
+        <FormulateInput type="submit" label="Enviar" />
+      </FormulateForm>
+    </div>
+    <div v-else>
+      <b-alert show v-if="error_submit == true" v-model="showAlert" variant="danger" dismissible>
+        {{ error_mensaje }}
+      </b-alert>
 
-            <b-form-input
-              v-else
-              :id="'input-' + item.id"
-              v-model="form[item.campo_vmodel]"
-              :type="item.type"
-              :placeholder="item.label"
-            ></b-form-input>
-          </b-form-group>
-        </div>
-      </div>
-      <b-button type="submit" variant="dark">Enviar</b-button>
-      <b-button type="reset" variant="dark">Limpiar</b-button>
-    </b-form>-->
-    <FormulateForm :values="form">
-      <div
-        v-for="item in campos"
-        :key="item.id"
-      >
-        <FormulateInput
-          v-if="item.obligatorio"
-          :help="item.descripcion"
-          :type="item.type"
-          :name="item.campo_vmodel"
-          :label="item.label + ':*'"
-          :placeholder="item.label"
-        />
-        <FormulateInput
-          v-else
-          validation="required"
-          :help="item.descripcion"
-          :type="item.type"
-          :name="item.campo_vmodel"
-          :label="item.label + ':*'"
-          :placeholder="item.label"
-        />
-      </div>
-      <FormulateInput
-        type="submit"
-        label="Enviar"
-      />
-    </FormulateForm>
+      <b-alert show v-else v-model="showAlert" variant="success" dismissible>
+        {{ error_mensaje }}
+      </b-alert>
+    </div>
   </div>
 </template>
 <script>
+import LoaderUCDC from "../components/Loader.vue";
+const axios = require("axios");
+
 export default {
-  name: 'Formulario',
+  name: "Formulario",
+  components: {
+    LoaderUCDC
+  },
   props: {
     campos: {
       type: Array,
-      default: [],
+      default: []
     },
     accion: {
       type: String,
-      default: '',
-    },
+      default: ""
+    }
   },
   data() {
     return {
       form: {},
+      error_mensaje: "",
+      error_submit: false,
       show: true,
+      loader: false,
+      showAlert: true
     };
   },
-  methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form = {};
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    },
+  mounted: function() {
+    this.campos.forEach(item => {
+      this.form[item.campo_vmodel] = "";
+    });
   },
+  methods: {
+    onSubmit() {
+      this.loader = true;
+      try {
+        axios
+          .post(this.accion, this.form)
+          .then(response => {
+            this.show = false;
+            this.error_mensaje = response.data.sMessage;
+            this.error_submit = false;
+            this.loader = false;
+            this.showAlert = true;
+            this.form = {}
+          })
+          .catch(error => {
+            this.show = false;
+            this.error_mensaje = "No se ha podido enviar el formulario";
+            this.error_submit = false;
+            this.loader = false;
+            this.showAlert = true;
+          });
+      } catch (err) {
+        this.show = false;
+        this.error_mensaje = "No se ha podido enviar el formulario";
+        this.error_submit = false;
+        this.loader = false;
+        this.showAlert = true;
+        console.log("err", err);
+      }
+    }
+  },
+  watch: {
+    showAlert: function (newVal) {
+     this.show = !newVal
+    }
+  }
 };
 </script>
 <style lang="scss">

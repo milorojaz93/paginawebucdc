@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import IrArriba from 'vue-backtotop';
+/*import IrArriba from 'vue-backtotop';
 import Carousel from '../components/Carousel.vue';
 import Lema from '../components/Lema.vue';
 import Seccion from '../components/SeccionContenedor.vue';
@@ -49,7 +49,17 @@ import GaleriaVideoYoutube from '../components/GaleriaVideoYoutube.vue';
 import BannerClases from '../components/BannerClases.vue';
 import VideoSeccion from '../components/VideoSeccion.vue';
 import RedesSociales from '../components/RedesSociales.vue';
-import Instructores from '../components/Instructores.vue';
+import Instructores from '../components/Instructores.vue';*/
+
+const IrArriba = () => import('vue-backtotop')
+const Carousel = () => import('../components/Carousel.vue')
+const Lema = () => import('../components/Lema.vue')
+const Seccion = () => import('../components/SeccionContenedor.vue')
+const GaleriaVideoYoutube = () => import('../components/GaleriaVideoYoutube.vue')
+const BannerClases = () => import('../components/BannerClases.vue')
+const VideoSeccion = () => import('../components/VideoSeccion.vue')
+const RedesSociales = () => import('../components/RedesSociales.vue')
+const Instructores = () => import('../components/Instructores.vue')
 
 export default {
   name: 'Inicio',

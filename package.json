@@ -1,5 +1,5 @@
 {
-    "name": "ucdc",
+    "name": "UCDC",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "@braid/vue-formulate": "^2.4.0",
+        "@nulldreams/vue-loading": "0.0.1",
         "axios": "^0.19.2",
         "bootstrap": "^4.5.0",
         "bootstrap-vue": "^2.15.0",
@@ -27,6 +28,7 @@
         "@vue/cli-service": "~4.4.0",
         "@vue/eslint-config-airbnb": "^5.0.2",
         "bootstrap": "^4.3.1",
+        "compression-webpack-plugin": "^4.0.0",
         "eslint": "^6.7.2",
         "eslint-plugin-import": "^2.20.2",
         "eslint-plugin-vue": "^6.2.2",
