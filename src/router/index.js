@@ -8,6 +8,9 @@ const Inscribete = () =>
 const Contactanos = () =>
     import ('../views/Contactanos.vue');
 
+const DanzandoT = () =>
+    import ('../views/proyectos/DanzandoT.vue');
+
 Vue.use(VueRouter);
 
 const routes = [{
@@ -29,6 +32,11 @@ const routes = [{
         path: '/contactanos',
         name: 'Contactanos',
         component: Contactanos,
+    },
+    {
+        path: '/proyectos/danzando-t',
+        name: 'Danzando T',
+        component: DanzandoT,
     },
 ];
 

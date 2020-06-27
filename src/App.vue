@@ -9,7 +9,7 @@
       <b-navbar-brand href="#">
         <picture>
           <img
-            src="../src/assets/logo.webp"
+            src="../src/assets/logo-header.webp"
             style="width: 50px"
           >
         </picture>

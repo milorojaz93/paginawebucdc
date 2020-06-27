@@ -7,7 +7,7 @@
       <b-col
         id="container-fullsize"
         cols="12"
-        lg="2"
+        lg="4"
         xl="2"
         md="4"
         sm="12"

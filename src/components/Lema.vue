@@ -16,7 +16,7 @@
         <div id="container-fade">
           <b-img-lazy
             id="image-fade"
-            src="..\assets\coreografia-alex.webp"
+            src="img/coreografia-alex.webp"
             fluid
             alt="Fluid image"
           />
@@ -45,7 +45,7 @@
         <div id="container-fade">
           <b-img-lazy
             id="image-fade"
-            src="..\assets\aprende-con-nosotros.webp"
+            src="img/aprende-con-nosotros.webp"
             fluid
             alt="Fluid image"
           />

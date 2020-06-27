@@ -17,6 +17,7 @@
             :label="item.label + ':*'"
             :placeholder="item.label"
             :validation-messages="item.mensajes"
+            :options="item.options"
           />
           <FormulateInput
             v-else
@@ -27,6 +28,7 @@
             :placeholder="item.label"
             :validation="item.validation"
             :validation-messages="item.mensajes"
+            :options="item.options"
           />
         </div>
         <FormulateErrors />
@@ -90,7 +92,7 @@ export default {
             this.error_submit = false;
             this.loader = false;
             this.showAlert = true;
-            this.form = {}
+            this.form = {};
           })
           .catch(error => {
             this.show = false;
@@ -110,8 +112,8 @@ export default {
     }
   },
   watch: {
-    showAlert: function (newVal) {
-     this.show = !newVal
+    showAlert: function(newVal) {
+      this.show = !newVal;
     }
   }
 };
