@@ -19,6 +19,7 @@ const fontawesomeCSS = () =>
     import ('@fortawesome/fontawesome-free/css/all.css')
 const fontawesomeJS = () =>
     import ('@fortawesome/fontawesome-free/js/all.js')
+
 import VueAnalytics from 'vue-analytics'
 
 /*import '@fortawesome/fontawesome-free/css/all.css';
